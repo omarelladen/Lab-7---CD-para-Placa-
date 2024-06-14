@@ -1,0 +1,28 @@
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+entity Pause is
+    Port ( rst : in STD_LOGIC;
+           start_stop : in STD_LOGIC;
+           detected : in STD_LOGIC;
+           q : out STD_LOGIC);
+end Pause;
+
+architecture Behavioral of Pause is
+    signal q_internal : STD_LOGIC := '0';
+begin
+
+process(rst, start_stop, detected)
+begin
+    if rst = '1' then
+        q_internal <= '0';
+    else
+        if start_stop = '1' or detected = '1' then
+            q_internal <= not q_internal;
+        end if;
+    end if;
+end process;
+
+q <= q_internal;
+
+end Behavioral;
